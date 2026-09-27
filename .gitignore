@@ -1,0 +1,20 @@
+HELP.md
+target/
+.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**/target/
+!**/src/test/**/target/
+
+### Angular ###
+frontend/node_modules/
+frontend/dist/
+frontend/.angular/
+
+### Environment ###
+.env
+.env.*
+!.env.example
+
+### IDE ###
+.idea/
+.vscode/
+*.iml

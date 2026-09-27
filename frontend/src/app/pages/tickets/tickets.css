@@ -1,0 +1,115 @@
+/* ================================
+   ADMIN TICKET ASSIGNMENT
+   ================================ */
+
+.assignment-panel {
+  margin-top: 18px;
+  padding: 18px;
+  background: #f8f9fb;
+  border: 1px solid #e1e5ea;
+  border-radius: 8px;
+}
+
+.assignment-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+  margin-bottom: 12px;
+  color: #333;
+}
+
+.assignment-loading {
+  color: #777;
+  font-size: 13px;
+  font-weight: normal;
+}
+
+.assignment-controls {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.assignment-controls select {
+  width: 100%;
+  max-width: 480px;
+  padding: 10px 12px;
+  border: 1px solid #cfd4da;
+  border-radius: 6px;
+  background: white;
+  color: #333;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.assignment-controls select:focus {
+  outline: none;
+  border-color: #1976d2;
+  box-shadow: 0 0 0 2px rgba(25, 118, 210, 0.12);
+}
+
+.assignment-controls select:disabled {
+  background: #eeeeee;
+  cursor: not-allowed;
+}
+
+.assigning-text {
+  color: #1976d2;
+  font-size: 13px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.no-agents {
+  margin: 0;
+  color: #777;
+  font-size: 14px;
+}
+
+.success-message {
+  margin-bottom: 20px;
+  padding: 12px 16px;
+  background: #d1e7dd;
+  border: 1px solid #badbcc;
+  border-radius: 7px;
+  color: #0f5132;
+  font-weight: 600;
+}
+
+.assignment-error {
+  margin-bottom: 20px;
+  padding: 12px 16px;
+  background: #f8d7da;
+  border: 1px solid #f5c2c7;
+  border-radius: 7px;
+  color: #842029;
+  font-weight: 600;
+}
+
+/* Mobile assignment layout */
+
+@media (max-width: 500px) {
+
+  .assignment-panel {
+    padding: 14px;
+  }
+
+  .assignment-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .assignment-controls {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .assignment-controls select {
+    max-width: none;
+  }
+
+  .assigning-text {
+    white-space: normal;
+  }
+}

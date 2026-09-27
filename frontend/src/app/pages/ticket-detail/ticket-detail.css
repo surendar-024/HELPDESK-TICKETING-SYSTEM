@@ -1,0 +1,333 @@
+.ticket-detail-page {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 40px 24px;
+}
+
+.page-header {
+  margin-bottom: 20px;
+}
+
+.back-link {
+  color: #2563eb;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.ticket-card,
+.comments-section {
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  padding: 28px;
+  margin-bottom: 24px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+}
+
+.ticket-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 20px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #eee;
+}
+
+.ticket-header h1 {
+  margin: 0 0 6px;
+  font-size: 28px;
+}
+
+.ticket-id {
+  margin: 0;
+  color: #777;
+  font-size: 14px;
+}
+
+.status {
+  padding: 7px 13px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.status.open {
+  background: #dbeafe;
+  color: #1d4ed8;
+}
+
+.status.assigned {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.status.in-progress {
+  background: #e0e7ff;
+  color: #4338ca;
+}
+
+.status.resolved {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.status.closed {
+  background: #e5e7eb;
+  color: #374151;
+}
+
+.status.cancelled {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+.description-section {
+  padding: 24px 0;
+}
+
+.description-section h2 {
+  margin-top: 0;
+  font-size: 18px;
+}
+
+.description-section p {
+  color: #555;
+  line-height: 1.7;
+  white-space: pre-wrap;
+}
+
+.ticket-info {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  padding-top: 20px;
+  border-top: 1px solid #eee;
+}
+
+.ticket-info div {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.ticket-info strong {
+  font-size: 13px;
+  color: #666;
+}
+
+.ticket-info span {
+  font-size: 14px;
+}
+
+.comments-section h2 {
+  margin-top: 0;
+}
+
+.comments-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-bottom: 30px;
+}
+
+.comment {
+  padding: 16px;
+  background: #f8fafc;
+  border-radius: 8px;
+}
+
+.comment-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 15px;
+  margin-bottom: 8px;
+}
+
+.comment-header strong {
+  color: #222;
+}
+
+.comment-header span {
+  color: #777;
+  font-size: 13px;
+}
+
+.comment p {
+  margin: 0;
+  color: #444;
+  line-height: 1.5;
+  white-space: pre-wrap;
+}
+
+.empty-comments,
+.message {
+  padding: 20px;
+  text-align: center;
+  background: #f8fafc;
+  border-radius: 8px;
+  color: #666;
+}
+
+.add-comment {
+  border-top: 1px solid #eee;
+  padding-top: 24px;
+}
+
+.add-comment h3 {
+  margin-top: 0;
+}
+
+.add-comment textarea {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 12px;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  font-family: inherit;
+  font-size: 15px;
+  resize: vertical;
+  margin-bottom: 12px;
+}
+
+.add-comment textarea:focus {
+  outline: none;
+  border-color: #2563eb;
+}
+
+.error-message {
+  padding: 12px 15px;
+  margin-bottom: 15px;
+  background: #fef2f2;
+  color: #b91c1c;
+  border-radius: 6px;
+}
+
+button {
+  padding: 11px 20px;
+  border: none;
+  border-radius: 6px;
+  background: #2563eb;
+  color: white;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+button:hover:not(:disabled) {
+  background: #1d4ed8;
+}
+
+button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+@media (max-width: 700px) {
+  .ticket-header {
+    flex-direction: column;
+  }
+
+  .ticket-info {
+    grid-template-columns: 1fr;
+  }
+
+  .comment-header {
+    flex-direction: column;
+    gap: 5px;
+  }
+}
+
+.status-management {
+  margin: 20px 0;
+  padding: 16px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+}
+
+.status-management h3 {
+  margin-top: 0;
+}
+
+.status-form {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.status-form select {
+  padding: 8px 12px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+.status-form button {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.status-form button:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.edit-section {
+  margin-top: 20px;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+}
+
+.edit-section h3 {
+  margin-top: 0;
+}
+
+.form-group {
+  margin-bottom: 16px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 600;
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select {
+  width: 100%;
+  padding: 10px;
+  box-sizing: border-box;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+.form-row {
+  display: flex;
+  gap: 20px;
+}
+
+.form-row .form-group {
+  flex: 1;
+}
+
+.edit-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.secondary-button {
+  opacity: 0.8;
+}
+
+.ticket-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.cancel-button {
+  background: #dc3545;
+}

@@ -1,0 +1,350 @@
+<div class="tickets-container">
+
+  <div class="page-header">
+
+    <div>
+      <h1>{{ pageTitle }}</h1>
+
+      <p>
+        {{ pageDescription }}
+      </p>
+    </div>
+
+    @if (isEmployee) {
+      <a
+        routerLink="/tickets/create"
+        class="create-button">
+        + Create Ticket
+      </a>
+    }
+
+  </div>
+
+  <div class="user-info">
+
+    <span>
+      Logged in as:
+      <strong>{{ userName }}</strong>
+    </span>
+
+    <span class="role-badge">
+      {{ userRole }}
+    </span>
+
+  </div>
+
+  @if (assignmentMessage) {
+
+    <div class="success-message">
+      {{ assignmentMessage }}
+    </div>
+
+  }
+
+  @if (assignmentError) {
+
+    <div class="assignment-error">
+      {{ assignmentError }}
+    </div>
+
+  }
+
+  @if (loading) {
+
+    <div class="loading-container">
+
+      <div class="spinner"></div>
+
+      <p>Loading tickets...</p>
+
+    </div>
+
+  }
+
+  @if (!loading && errorMessage) {
+
+    <div class="error-container">
+
+      <p>{{ errorMessage }}</p>
+
+      <button
+        type="button"
+        (click)="loadTickets()">
+
+        Try Again
+
+      </button>
+
+    </div>
+
+  }
+
+  @if (!loading && !errorMessage && tickets.length === 0) {
+
+    <div class="empty-container">
+
+      <h2>No tickets found</h2>
+
+      @if (isEmployee) {
+
+        <p>
+          You have not created any support tickets yet.
+        </p>
+
+        <a
+          routerLink="/tickets/create"
+          class="create-button">
+
+          Create Your First Ticket
+
+        </a>
+
+      }
+
+      @if (isAgent) {
+
+        <p>
+          No tickets are currently assigned to you.
+        </p>
+
+      }
+
+      @if (isAdmin) {
+
+        <p>
+          There are currently no tickets in the system.
+        </p>
+
+      }
+
+    </div>
+
+  }
+
+  @if (!loading && !errorMessage && tickets.length > 0) {
+
+    <div class="ticket-count">
+
+      {{ tickets.length }}
+
+      {{ tickets.length === 1 ? 'ticket' : 'tickets' }}
+
+      found
+
+    </div>
+
+    <div class="tickets-list">
+
+      @for (ticket of tickets; track ticket.id) {
+
+        <div class="ticket-card">
+
+          <div class="ticket-card-header">
+
+            <div>
+
+              <h2>
+                {{ ticket.title }}
+              </h2>
+
+              <span class="ticket-number">
+                Ticket #{{ ticket.id }}
+              </span>
+
+            </div>
+
+            <span
+              class="status"
+              [class.open]="ticket.status === 'OPEN'"
+              [class.assigned]="ticket.status === 'ASSIGNED'"
+              [class.in-progress]="ticket.status === 'IN_PROGRESS'"
+              [class.resolved]="ticket.status === 'RESOLVED'"
+              [class.closed]="ticket.status === 'CLOSED'"
+              [class.cancelled]="ticket.status === 'CANCELLED'">
+
+              {{ ticket.status }}
+
+            </span>
+
+          </div>
+
+          <p class="ticket-description">
+            {{ ticket.description }}
+          </p>
+
+          <div class="ticket-info">
+
+            <div class="info-item">
+
+              <span class="label">
+                Category
+              </span>
+
+              <span class="value">
+                {{ ticket.category }}
+              </span>
+
+            </div>
+
+            <div class="info-item">
+
+              <span class="label">
+                Priority
+              </span>
+
+              <span
+                class="priority"
+                [class.low]="ticket.priority === 'LOW'"
+                [class.medium]="ticket.priority === 'MEDIUM'"
+                [class.high]="ticket.priority === 'HIGH'"
+                [class.critical]="ticket.priority === 'CRITICAL'">
+
+                {{ ticket.priority }}
+
+              </span>
+
+            </div>
+
+            <div class="info-item">
+
+              <span class="label">
+                Created By
+              </span>
+
+              <span class="value">
+                {{ ticket.createdByName }}
+              </span>
+
+            </div>
+
+            <div class="info-item">
+
+              <span class="label">
+                Assigned To
+              </span>
+
+              <span class="value">
+                {{ ticket.assignedToName || 'Not assigned' }}
+              </span>
+
+            </div>
+
+            <div class="info-item">
+
+              <span class="label">
+                Created
+              </span>
+
+              <span class="value">
+                {{ ticket.createdAt | date:'medium' }}
+              </span>
+
+            </div>
+
+            <div class="info-item">
+
+              <span class="label">
+                Updated
+              </span>
+
+              <span class="value">
+                {{ ticket.updatedAt | date:'medium' }}
+              </span>
+
+            </div>
+
+          </div>
+
+          @if (isAdmin) {
+
+            <div class="assignment-panel">
+
+              <div class="assignment-header">
+
+                <strong>
+                  Assign Support Agent
+                </strong>
+
+                @if (loadingAgents) {
+
+                  <span class="assignment-loading">
+                    Loading agents...
+                  </span>
+
+                }
+
+              </div>
+
+              @if (!loadingAgents && agents.length === 0) {
+
+                <p class="no-agents">
+                  No support agents are available.
+                </p>
+
+              }
+
+              @if (!loadingAgents && agents.length > 0) {
+
+                <div class="assignment-controls">
+
+                  <select
+                    [disabled]="assigningTicketId === ticket.id"
+                    (change)="assignTicket(ticket, $event)">
+
+                    <option value="">
+                      Select an agent
+                    </option>
+
+                    @for (agent of agents; track agent.id) {
+
+                      <option
+                        [value]="agent.id"
+                        [selected]="agent.id === ticket.assignedToId">
+
+                        {{ agent.name }}
+                        —
+                        {{ agent.email }}
+
+                      </option>
+
+                    }
+
+                  </select>
+
+                  @if (assigningTicketId === ticket.id) {
+
+                    <span class="assigning-text">
+                      Assigning...
+                    </span>
+
+                  }
+
+                </div>
+
+              }
+
+            </div>
+
+          }
+
+          <div class="ticket-actions">
+
+            <a
+              [routerLink]="['/tickets', ticket.id]"
+              class="view-button">
+
+              View Details
+
+            </a>
+
+          </div>
+
+        </div>
+
+      }
+
+    </div>
+
+  }
+
+</div>

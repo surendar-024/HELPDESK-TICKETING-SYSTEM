@@ -1,0 +1,234 @@
+<div class="dashboard">
+
+  <header class="dashboard-header">
+
+    <div class="brand-section">
+      <div class="brand-icon">
+        IT
+      </div>
+
+      <div>
+        <h1>IT Help Desk</h1>
+        <p>Support Ticket Management System</p>
+      </div>
+    </div>
+
+    <button
+      class="logout-button"
+      type="button"
+      (click)="logout()">
+      Logout
+    </button>
+
+  </header>
+
+
+  <main class="dashboard-content">
+
+    <section class="hero-card">
+
+      <div class="hero-content">
+
+        <span class="welcome-label">
+          Welcome back
+        </span>
+
+        <h2>
+          Hello, {{ name }}!
+        </h2>
+
+        <p>
+          {{ dashboardDescription }}
+        </p>
+
+      </div>
+
+      <div class="role-badge">
+        {{ roleLabel }}
+      </div>
+
+    </section>
+
+
+    <section class="section-heading">
+
+      <div>
+        <h2>Quick Actions</h2>
+
+        <p>
+          Access the help desk features available to you.
+        </p>
+      </div>
+
+    </section>
+
+
+    <section class="dashboard-actions">
+
+      <a
+        routerLink="/tickets"
+        class="action-link">
+
+        <div class="action-card">
+
+          <div class="action-icon tickets-icon">
+            🎫
+          </div>
+
+          <div class="action-content">
+
+            <h3>
+              {{ ticketCardTitle }}
+            </h3>
+
+            <p>
+              {{ ticketCardDescription }}
+            </p>
+
+            <span class="action-link-text">
+              Open tickets →
+            </span>
+
+          </div>
+
+        </div>
+
+      </a>
+
+
+      @if (role === 'EMPLOYEE') {
+
+        <a
+          routerLink="/tickets/create"
+          class="action-link">
+
+          <div class="action-card">
+
+            <div class="action-icon create-icon">
+              +
+            </div>
+
+            <div class="action-content">
+
+              <h3>
+                Create Ticket
+              </h3>
+
+              <p>
+                Report a new IT issue or request support.
+              </p>
+
+              <span class="action-link-text">
+                Create ticket →
+              </span>
+
+            </div>
+
+          </div>
+
+        </a>
+
+      }
+
+
+      @if (role === 'ADMIN') {
+
+        <div class="info-card">
+
+          <div class="action-icon admin-icon">
+            ⚙
+          </div>
+
+          <div class="action-content">
+
+            <h3>
+              Administrator
+            </h3>
+
+            <p>
+              You can view all tickets and assign support agents.
+            </p>
+
+            <span class="info-text">
+              Full system access
+            </span>
+
+          </div>
+
+        </div>
+
+      }
+
+
+      @if (role === 'AGENT') {
+
+        <div class="info-card">
+
+          <div class="action-icon agent-icon">
+            ✓
+          </div>
+
+          <div class="action-content">
+
+            <h3>
+              Support Agent
+            </h3>
+
+            <p>
+              Work on assigned tickets and keep their status updated.
+            </p>
+
+            <span class="info-text">
+              Support workspace
+            </span>
+
+          </div>
+
+        </div>
+
+      }
+
+    </section>
+
+
+    <section class="account-card">
+
+      <div class="account-header">
+
+        <h2>Account Information</h2>
+
+      </div>
+
+      <div class="account-details">
+
+        <div class="account-item">
+
+          <span class="account-label">
+            Name
+          </span>
+
+          <strong>
+            {{ name }}
+          </strong>
+
+        </div>
+
+        <div class="account-item">
+
+          <span class="account-label">
+            Role
+          </span>
+
+          <strong>
+            {{ roleLabel }}
+          </strong>
+
+        </div>
+
+      </div>
+
+    </section>
+
+  </main>
+
+</div>

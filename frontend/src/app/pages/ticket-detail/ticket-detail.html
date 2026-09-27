@@ -1,0 +1,493 @@
+<div class="ticket-detail-container">
+
+  <div class="page-header">
+
+    <a routerLink="/tickets" class="back-link">
+      ← Back to Tickets
+    </a>
+
+    <h1>Ticket Details</h1>
+
+  </div>
+
+
+  @if (loadingTicket) {
+
+    <div class="loading">
+      Loading ticket...
+    </div>
+
+  }
+
+
+  @if (errorMessage) {
+
+    <div class="error-message">
+      {{ errorMessage }}
+    </div>
+
+  }
+
+
+  @if (ticket && !loadingTicket) {
+
+    <div class="ticket-card">
+
+      <div class="ticket-header">
+
+        <div>
+
+          <h2>
+            {{ ticket.title }}
+          </h2>
+
+          <p class="ticket-id">
+            Ticket #{{ ticket.id }}
+          </p>
+
+        </div>
+
+
+        <span
+          class="status"
+          [class]="'status ' + ticket.status.toLowerCase()"
+        >
+          {{ ticket.status }}
+        </span>
+
+      </div>
+
+
+      @if (updateError) {
+
+        <div class="error-message">
+          {{ updateError }}
+        </div>
+
+      }
+
+
+      @if (statusError) {
+
+        <div class="error-message">
+          {{ statusError }}
+        </div>
+
+      }
+
+
+      @if (isAgentOrAdmin) {
+
+        <div class="status-management">
+
+          <h3>Update Status</h3>
+
+          <div class="status-form">
+
+            <select
+              [(ngModel)]="selectedStatus"
+              [disabled]="changingStatus"
+            >
+
+              <option value="">
+                Select status
+              </option>
+
+              <option value="ASSIGNED">
+                ASSIGNED
+              </option>
+
+              <option value="IN_PROGRESS">
+                IN_PROGRESS
+              </option>
+
+              <option value="RESOLVED">
+                RESOLVED
+              </option>
+
+              <option value="CLOSED">
+                CLOSED
+              </option>
+
+            </select>
+
+
+            <button
+              type="button"
+              (click)="changeStatus()"
+              [disabled]="changingStatus || !selectedStatus"
+            >
+
+              {{
+                changingStatus
+                  ? 'Updating...'
+                  : 'Update Status'
+              }}
+
+            </button>
+
+          </div>
+
+        </div>
+
+      }
+
+
+      @if (editing) {
+
+        <div class="edit-section">
+
+          <h3>Edit Ticket</h3>
+
+
+          <div class="form-group">
+
+            <label for="editTitle">
+              Title
+            </label>
+
+            <input
+              id="editTitle"
+              type="text"
+              [(ngModel)]="editTitle"
+              placeholder="Enter ticket title"
+            />
+
+          </div>
+
+
+          <div class="form-group">
+
+            <label for="editDescription">
+              Description
+            </label>
+
+            <textarea
+              id="editDescription"
+              rows="5"
+              [(ngModel)]="editDescription"
+              placeholder="Enter ticket description"
+            ></textarea>
+
+          </div>
+
+
+          <div class="form-row">
+
+            <div class="form-group">
+
+              <label for="editCategory">
+                Category
+              </label>
+
+              <select
+                id="editCategory"
+                [(ngModel)]="editCategory"
+              >
+
+                <option value="HARDWARE">
+                  Hardware
+                </option>
+
+                <option value="SOFTWARE">
+                  Software
+                </option>
+
+                <option value="NETWORK">
+                  Network
+                </option>
+
+                <option value="ACCESS">
+                  Access
+                </option>
+
+                <option value="OTHER">
+                  Other
+                </option>
+
+              </select>
+
+            </div>
+
+
+            <div class="form-group">
+
+              <label for="editPriority">
+                Priority
+              </label>
+
+              <select
+                id="editPriority"
+                [(ngModel)]="editPriority"
+              >
+
+                <option value="LOW">
+                  Low
+                </option>
+
+                <option value="MEDIUM">
+                  Medium
+                </option>
+
+                <option value="HIGH">
+                  High
+                </option>
+
+                <option value="CRITICAL">
+                  Critical
+                </option>
+
+              </select>
+
+            </div>
+
+          </div>
+
+
+          <div class="edit-actions">
+
+            <button
+              type="button"
+              (click)="updateTicket()"
+              [disabled]="updating"
+            >
+
+              {{
+                updating
+                  ? 'Saving...'
+                  : 'Save Changes'
+              }}
+
+            </button>
+
+
+            <button
+              type="button"
+              class="secondary-button"
+              (click)="cancelEditing()"
+              [disabled]="updating"
+            >
+              Cancel Edit
+            </button>
+
+          </div>
+
+        </div>
+
+      }
+
+
+      @else {
+
+        <div class="ticket-description">
+
+          <h3>Description</h3>
+
+          <p>
+            {{ ticket.description }}
+          </p>
+
+        </div>
+
+
+        <div class="ticket-info">
+
+          <div class="info-item">
+
+            <strong>Category</strong>
+
+            <span>
+              {{ ticket.category }}
+            </span>
+
+          </div>
+
+
+          <div class="info-item">
+
+            <strong>Priority</strong>
+
+            <span>
+              {{ ticket.priority }}
+            </span>
+
+          </div>
+
+
+          <div class="info-item">
+
+            <strong>Created By</strong>
+
+            <span>
+              {{ ticket.createdByName }}
+            </span>
+
+          </div>
+
+
+          <div class="info-item">
+
+            <strong>Assigned To</strong>
+
+            <span>
+              {{ ticket.assignedToName || 'Not assigned' }}
+            </span>
+
+          </div>
+
+
+          <div class="info-item">
+
+            <strong>Created At</strong>
+
+            <span>
+              {{ ticket.createdAt | date:'medium' }}
+            </span>
+
+          </div>
+
+
+          <div class="info-item">
+
+            <strong>Updated At</strong>
+
+            <span>
+              {{ ticket.updatedAt | date:'medium' }}
+            </span>
+
+          </div>
+
+        </div>
+
+
+        @if (canEditOrCancel) {
+
+          <div class="ticket-actions">
+
+            <button
+              type="button"
+              (click)="startEditing()"
+            >
+              Edit Ticket
+            </button>
+
+
+            <button
+              type="button"
+              class="cancel-button"
+              (click)="cancelTicket()"
+              [disabled]="cancelling"
+            >
+
+              {{
+                cancelling
+                  ? 'Cancelling...'
+                  : 'Cancel Ticket'
+              }}
+
+            </button>
+
+          </div>
+
+        }
+
+      }
+
+    </div>
+
+
+    <div class="comments-section">
+
+      <h2>Comments</h2>
+
+
+      @if (loadingComments) {
+
+        <div class="loading">
+          Loading comments...
+        </div>
+
+      }
+
+
+      @if (commentError) {
+
+        <div class="error-message">
+          {{ commentError }}
+        </div>
+
+      }
+
+
+      @if (!loadingComments && !commentError) {
+
+        @if (comments.length === 0) {
+
+          <p class="no-comments">
+            No comments yet.
+          </p>
+
+        }
+
+
+        @for (comment of comments; track comment.id) {
+
+          <div class="comment-card">
+
+            <div class="comment-header">
+
+              <strong>
+                {{ comment.userName }}
+              </strong>
+
+              <span>
+                {{ comment.createdAt | date:'medium' }}
+              </span>
+
+            </div>
+
+
+            <p>
+              {{ comment.message }}
+            </p>
+
+          </div>
+
+        }
+
+      }
+
+
+      <div class="add-comment">
+
+        <h3>Add Comment</h3>
+
+        <textarea
+          [(ngModel)]="commentMessage"
+          rows="4"
+          placeholder="Write your comment..."
+          [disabled]="addingComment"
+        ></textarea>
+
+
+        <button
+          type="button"
+          (click)="addComment()"
+          [disabled]="addingComment"
+        >
+
+          {{
+            addingComment
+              ? 'Adding...'
+              : 'Add Comment'
+          }}
+
+        </button>
+
+      </div>
+
+    </div>
+
+  }
+
+</div>

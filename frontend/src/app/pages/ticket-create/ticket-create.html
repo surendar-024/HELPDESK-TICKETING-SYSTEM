@@ -1,0 +1,105 @@
+<div class="create-ticket-page">
+
+  <div class="page-header">
+    <div>
+      <h1>Create Support Ticket</h1>
+      <p>Describe your issue and our support team will help you.</p>
+    </div>
+
+    <a routerLink="/tickets" class="back-link">
+      ← My Tickets
+    </a>
+  </div>
+
+  <div class="form-card">
+
+    <form (ngSubmit)="createTicket()">
+
+      <div class="form-group">
+        <label for="title">Title</label>
+
+        <input
+          id="title"
+          type="text"
+          name="title"
+          [(ngModel)]="title"
+          placeholder="e.g. Laptop cannot connect to Wi-Fi"
+          maxlength="150"
+          required
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="description">Description</label>
+
+        <textarea
+          id="description"
+          name="description"
+          [(ngModel)]="description"
+          placeholder="Describe the issue in detail..."
+          rows="7"
+          required
+        ></textarea>
+      </div>
+
+      <div class="form-row">
+
+        <div class="form-group">
+          <label for="category">Category</label>
+
+          <select
+            id="category"
+            name="category"
+            [(ngModel)]="category"
+          >
+            <option value="HARDWARE">Hardware</option>
+            <option value="SOFTWARE">Software</option>
+            <option value="NETWORK">Network</option>
+            <option value="ACCESS">Access</option>
+            <option value="OTHER">Other</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="priority">Priority</label>
+
+          <select
+            id="priority"
+            name="priority"
+            [(ngModel)]="priority"
+          >
+            <option value="LOW">Low</option>
+            <option value="MEDIUM">Medium</option>
+            <option value="HIGH">High</option>
+            <option value="CRITICAL">Critical</option>
+          </select>
+        </div>
+
+      </div>
+
+      @if (errorMessage) {
+        <div class="error-message">
+          {{ errorMessage }}
+        </div>
+      }
+
+      <div class="form-actions">
+
+        <a routerLink="/tickets" class="cancel-button">
+          Cancel
+        </a>
+
+        <button
+          type="submit"
+          [disabled]="loading"
+        >
+          {{ loading ? 'Creating Ticket...' : 'Create Ticket' }}
+        </button>
+
+      </div>
+
+    </form>
+
+  </div>
+
+</div>
